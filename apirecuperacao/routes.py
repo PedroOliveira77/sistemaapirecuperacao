@@ -52,7 +52,7 @@ def cadastro():
         if form_cadastro.token_acess.data != 'uhdfaAADF123':
             flash('Token incorreto. Tente novamente.', 'alert-danger')
             return redirect(url_for('cadastro'))
-        senha_cript = bcrypt.generate_password_hash(form_cadastro.senha.data)
+        senha_cript = bcrypt.generate_password_hash(form_cadastro.senha.data).decode("utf-8")
         usuario = Usuario(
             nome=form_cadastro.nome.data, email=form_cadastro.email.data, senha=senha_cript)
         database.session.add(usuario)
