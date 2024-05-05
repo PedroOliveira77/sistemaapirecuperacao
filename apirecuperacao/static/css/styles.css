@@ -1,0 +1,23 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+.botao-navbar {
+    position: relative;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-brand {
+    display: flex;
+}
+
+.navbar-brand img {
+    max-width: 50px;
+}
+
+.bg-primarycolor {
+    background-color: #F8F9FA;
+}

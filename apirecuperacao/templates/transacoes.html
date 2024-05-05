@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Transações</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="container p-3">
+    <div class=" text-center">
+        <h1>Lista de transações</h1>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <form class="mb-4" method="GET" action="{{ url_for('clientes') }}">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <label class="sr-only" for="filtro">Filtrar por</label>
+                        <select class="form-control" id="filtro" name="filtro">
+                            <option value="id">Todos</option>
+                            <option value="nome">Nome</option>
+                            <option value="email">Email</option>
+                            <option value="status">Status</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <label class="sr-only" for="termo">Termo de busca</label>
+                        <input type="text" class="form-control" id="termo" name="termo"
+                            placeholder="Digite o termo de busca">
+                    </div>
+                    <div class="col-auto pt-3">
+                        <button type="submit" class="btn btn-danger">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Valor</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Parcelas</th>
+                    <th>Acesso ao curso</th>
+                    <th>Enviar mensagem</th>
+                    <th>Tipo mensagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transacao in lista_clientes %}
+                <tr>
+                    <td>{{ transacao.id }}</td>
+                    <td>{{ transacao.nome }}</td>
+                    <td>{{ transacao.email }}</td>
+                    <td>{{ transacao.status }}</td>
+                    <td>{{ transacao.valor }}</td>
+                    <td>{{ transacao.forma_pagamento }}</td>
+                    <td>{{ transacao.parcelas }}</td>
+                    <td>{{ transacao.acesso_curso }}</td>
+                    <td>{{ transacao.enviar_mensagem }}</td>
+                    <td>{{ transacao.tipo_mensagem }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if lista_clientes.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('clientes', page=1) }}">Primeira</a></li>
+            <li class="page-item"><a class="page-link"
+                    href="{{ url_for('clientes', page=lista_clientes.prev_num) }}">Anterior</a></li>
+            {% endif %}
+            {% for page_num in lista_clientes.iter_pages() %}
+            {% if page_num %}
+            {% if page_num != lista_clientes.page %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('clientes', page=page_num) }}">{{ page_num
+                    }}</a></li>
+            {% else %}
+            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+            {% endif %}
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+            {% endfor %}
+            {% if lista_clientes.has_next %}
+            <li class="page-item"><a class="page-link"
+                    href="{{ url_for('clientes', page=lista_clientes.next_num) }}">Próxima</a></li>
+            <li class="page-item"><a class="page-link"
+                    href="{{ url_for('clientes', page=lista_clientes.pages) }}">Última</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% endblock %}

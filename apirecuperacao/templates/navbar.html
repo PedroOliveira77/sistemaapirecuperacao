@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid container">
+        <button class="navbar-brand botao-navbar">
+            <a id="home-menu">
+                <img src="{{ url_for('static', filename='img/logo-01.png') }}" alt="Logotipo SAAS">
+            </a>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('clientes') }}">API Recuperação</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="ps-3 collapse navbar-collapse" id="navbarSupportedContent">
+            {% if current_user.is_authenticated %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('clientes') }}">Transações</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+        {% if current_user.is_authenticated %}
+        <div>
+            <div class="nav-item dropdown collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="text-danger ms-auto mb-2 mb-lg-0 nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Usuário: {{ current_user.nome }}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('sair') }}">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</nav>
