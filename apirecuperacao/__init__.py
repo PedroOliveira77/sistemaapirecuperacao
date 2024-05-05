@@ -11,6 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
+import sqlalchemy
 
 app = Flask(__name__)
 
@@ -26,5 +27,16 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'home'
 login_manager.login_message_category = 'alert-warning'
+
+from apirecuperacao import models
+engine = sqlalchemy.create_engine('SQLALCHEMY_DATABASE_URI')
+inspector = sqlalchemy.inspect(engine)
+if not inspector.has_table("usuario"):
+    with app.app_context():
+        database.drop_all()
+        database.create_all()
+        print('Banco criado')
+else:
+    print('Banco já existe')
 
 from apirecuperacao import routes
