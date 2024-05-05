@@ -135,16 +135,16 @@ def webhook():
     if request.method == 'POST':
         data = request.json
         if data['status'] == 'aprovado':
-            print(f'Liberar acesso do curso para o email: {data['email']}')
+            print(f'Liberar acesso do curso para o email: {data["email"]}')
             print(f'Enviar mensagem de boas vindas para o email: {
-                  data['email']}')
+                  data["email"]}')
             alimentar_banco('liberado', 'sim', 'boas vindas')
         elif data['status'] == 'recusado':
             print(
-                f'Enviar mensagem de Pagamento Recusado para o email: {data['email']}')
+                f'Enviar mensagem de Pagamento Recusado para o email: {data["email"]}')
             alimentar_banco('bloqueado', 'sim', 'pagamento recusado')
         else:
-            print(f'Retirar acesso do curso para o email: {data['email']}')
+            print(f'Retirar acesso do curso para o email: {data["email"]}')
             alimentar_banco('retirado', 'nao', '')
         return 'Recebido com sucesso', 200
     else:
