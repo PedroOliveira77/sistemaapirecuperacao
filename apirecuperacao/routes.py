@@ -89,12 +89,15 @@ def clientes():
 
     campo = campos_filtro[filtro]
 
-    if filtro != 'id':
+    if filtro == 'id':
+        lista_clientes = Transacoes.query.filter(or_(
+            Transacoes.nome.like(f"%{termo}%"),
+            Transacoes.email.like(f"%{termo}%"),
+            Transacoes.status.like(f"%{termo}%")
+            )).paginate(page=page, per_page=per_page)
+    else:
         lista_clientes = Transacoes.query.filter(campo.like(
             f"%{termo}%")).paginate(page=page, per_page=per_page)
-    else:
-        lista_clientes = Transacoes.query.paginate(
-            page=page, per_page=per_page)
     return render_template('transacoes.html', lista_clientes=lista_clientes)
 
 
